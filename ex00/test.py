@@ -1,0 +1,23 @@
+from matrix import Matrix, Vector
+
+if __name__ == "__main__":
+    m1 = Matrix([[1, 2, 3], [4, 5, 6]])
+    m2 = Matrix([[7, 8, 9], [10, 11, 12]])
+    print("Matrix 1:")
+    print(m1)
+    print("Matrix 2:")
+    print(m2)
+    print("Addition of Matrix 1 and Matrix 2:")
+    print(m1 + m2)
+    print("Subtraction of Matrix 2 from Matrix 1:")
+    print(m1 - m2)
+    v1 = Vector([[1], [2], [3]])
+    v2 = Vector([[4], [5], [6]])
+    print("Vector 1:")
+    print(v1)
+    print("Vector 2:")
+    print(v2)
+    print("Addition of Vector 1 and Vector 2:")
+    print(v1 + v2)
+    print("Subtraction of Vector 2 from Vector 1:")
+    print(v1 - v2)
