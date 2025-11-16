@@ -40,25 +40,45 @@ class Matrix:
         return type(self)(result_data)
 
     def __truediv__(self, scalar):
-        pass
+        if not isinstance(scalar, (int, float)):
+            raise ValueError("Can only divide by a scalar")
+        result_data = [[self.data[i][j] / scalar for j in range(self.shape[1])] for i in range(self.shape[0])]
+        return type(self)(result_data)
 
     def __rtruediv__(self, scalar):
-        pass
+        if not isinstance(scalar, (int, float)):
+            raise ValueError("Can only divide by a scalar")
+        result_data = [[scalar / self.data[i][j] for j in range(self.shape[1])] for i in range(self.shape[0])]
+        return type(self)(result_data)
 
     def __mul__(self, scalar):
-        pass
+        if isinstance(scalar, (int, float)):
+            result_data = [[self.data[i][j] * scalar for j in range(self.shape[1])] for i in range(self.shape[0])]
+        elif isinstance(scalar, Vector):
+            if self.shape[1] != scalar.shape[0]:
+                raise ValueError("Matrix columns must match Vector rows for multiplication")
+            result_data = [[sum(self.data[i][k] * scalar.data[k][0] for k in range(self.shape[1]))] for i in range(self.shape[0])]
+            return type(scalar)(result_data)
+        elif isinstance(scalar, Matrix):
+            if self.shape[1] != scalar.shape[0]:
+                raise ValueError("Matrix A columns must match Matrix B rows for multiplication")
+            result_data = [[sum(self.data[i][k] * scalar.data[k][j] for k in range(self.shape[1])) for j in range(scalar.shape[1])] for i in range(self.shape[0])]
+        else:
+            raise ValueError("Can only multiply by a scalar, Vector, or Matrix")
+        return type(self)(result_data)
 
     def __rmul__(self, scalar):
-        pass
+        return self.__mul__(scalar)
 
     def __str__(self):  
         return '\n'.join(['[' + ' '.join(map(str, row)) + ']' for row in self.data])
 
     def __repr__(self):
-        pass
+        return f"Matrix({self.data})"
 
     def T(self):
-        pass
+        transposed_data = [[self.data[j][i] for j in range(self.shape[0])] for i in range(self.shape[1])]
+        return type(self)(transposed_data)
 
 op = {
     '+': lambda a, b: a + b,
